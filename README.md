@@ -1,17 +1,17 @@
-# django_gauth_quickstarters
+# django_gauth_samples
 quickstarters on django_gauth package
 
 <details>
   <summary>Information on django-gauth Package</summary>
   
   **django-gauth**
-  * [🔗 Official Docs](https://docs.google.com/document/d/1iQ6cswf_KuNBLTs_jGX4cNJfJZpXYXnqoDV5aFS-Ah4/edit?usp=sharing)
+  * [🔗 Official Docs](https://masterpiece93.github.io/django-gauth/)
 
-  * [🔗 Official Page](https://docs.google.com/spreadsheets/d/1Z8jNZTtw4lOgBSaudmGyzPZE4Ln1fqtyCuoCvpqktM0/edit?gid=0#gid=0)
+  * [🔗 Official Page - PyPi](https://pypi.org/project/django-gauth/)
 
-  * [🔗 Package Release History](https://docs.google.com/spreadsheets/d/1Z8jNZTtw4lOgBSaudmGyzPZE4Ln1fqtyCuoCvpqktM0/edit?gid=0#gid=0)
-
-  * [🔗 Package Support Page](https://docs.google.com/document/d/1mDEp3c1NHMtYGYa68-ynjgPS06rEScVc4uswDN51guI/edit?usp=sharing)
+  * [🔗 Package Release History - PyPi](https://pypi.org/project/django-gauth/#history)
+  
+  * [🔗 Package Release History Detailed](https://github.com/masterPiece93/django-gauth/releases)
 
 </details>
 
