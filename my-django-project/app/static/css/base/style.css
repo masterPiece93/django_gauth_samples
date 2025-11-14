@@ -1,0 +1,17 @@
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+custom-flash-message {
+    background-color: aliceblue;
+    padding: 10px;
+    border: 1px solid blue;
+    border-radius: 0.5em;
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+}

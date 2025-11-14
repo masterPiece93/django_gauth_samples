@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{context_data.title}}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=1.0.3">
+    <script src="{% static 'js/flash_message.js' %}"></script> <!-- : for displaying flash messages -->
+    <style>
+        custom-flash-message {
+            background-color: aliceblue;
+            padding: 10px;
+            border: 1px solid blue;
+            border-radius: 0.5em;
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Django Project</h1>
+        <b>demonstration of django-gauth integration</b>
+    </header>
+    <h1 style="text-align: center;">{{context_data.title}}</h1>
+    <custom-flash-message id="messageBox" timed="true" duration="7000" style="opacity: 0.97; font-weight: bolder;"></custom-flash-message>
+    <nav style="padding: 1em;">
+        <a href="/" style="border: 1px solid blue;
+            background: aliceblue;
+            padding: 0.3em;
+            cursor: pointer;
+            border-radius: 0.5em;
+            margin: 0.1em;"
+            >
+                Home
+        </a>
+    </nav>
+    <main>
+        <h2 style="color: cadetblue;">{{context_data.page_title}}</h2>
+        <b id="auth" style="border: 1px solid blue;
+            background: aliceblue;
+            padding: 0.3em;
+            cursor: pointer;"
+        >
+            Authenticate
+        </b>
+        <b id="test" style="border: 1px solid blue;
+            background: aliceblue;
+            padding: 0.3em;
+            cursor: pointer;"
+        >
+            Test
+        </b>
+        <div style="background: whitesmoke;border: 1px solid gainsboro;padding: 1em;">
+            <div style="display: flex;">
+                <label for="name" style="height: 50%;">Name : </label>
+                <p name="name" style="margin: 0;padding-left: 1px;">{{context_data.user_data.name}}</p>
+            </div>
+
+            <div style="display: flex;">
+                <label for="name" style="height: 50%;">Age : </label>
+                <p name="age" style="margin: 0;padding-left: 1px;">{{context_data.user_data.age}}</p>
+            </div>
+
+            <div style="display: flex;">
+                <label for="job" style="height: 50%;">Job : </label>
+                <p name="job" style="margin: 0;padding-left: 1px;">{{context_data.user_data.job}}</p>
+            </div>
+
+            <div style="display: flex;">
+                <label for="sex" style="height: 50%;">Sex : </label>
+                <p name="sex" style="margin: 0;padding-left: 1px;">{{context_data.user_data.sex}}</p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 <a href="https://pypi.org/project/django-gauth/" target="_blank" style="color: white;">django-gauth</a> @<a href="https://www.linkedin.com/in/ankit-yadav-b3157b89/" target="_blank" style="color: white;">Ankit Kumar</a> . All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/global.js' %}"></script>
+    <script>
+        // [ Jinja Variables Initialization ]
+        const loginUrl = "{{context_data.login_url}}"; // login api url
+        const isGoogleAuthenticated = getConfirmatoryBool("{{context_data.is_google_authenticated}}".toLocaleLowerCase());
+    </script>
+    <script src="{% static 'js/user_bio/login_scheme_handling.js' %}"></script>
+    <script>
+        // [ for checking if page is google authenticated ]
+        if (isGoogleAuthenticated) {
+            displaySuccessMessage("messageBox", "You are Authenticated With Google ( via django-gauth HPA login scheme )")
+        }
+        /** NOTE
+         * This is a "server rendered client" setup, where html pages are served from the
+         *  server itself, hence `isGoogleAuthenticated` is fetched via Jinja2 variable 
+         *  from the server api view itself !
+         * BUT ...
+         * If Your Client side is not server rendered (React/Angular/Vue), you must expose 
+         *  an api from your server for authentication-status , and make a fetch/xhr/axios 
+         *  call here to get the value for `isGoogleAuthenticated` .
+        */
+    </script>
+</body>
+</html>

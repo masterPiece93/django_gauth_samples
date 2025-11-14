@@ -1,0 +1,7 @@
+# Quality Analysis Packages
+pylint
+pylint-django
+black
+ruff
+mypy
+vulture

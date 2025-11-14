@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{context_data.title}}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=1.0.3">
+    <link rel="stylesheet" href="{% static 'css/base/style.css' %}">
+    <script src="{% static 'js/flash_message.js' %}"></script> <!-- : for displaying flash messages -->
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Django Project</h1>
+        <b>demonstration of django-gauth integration</b>
+    </header>
+    <h1 style="text-align: center;">{{context_data.title}}</h1>
+    <custom-flash-message id="messageBox" timed="true" duration="7000" style="opacity: 0.97; font-weight: bolder;"></custom-flash-message>
+    <nav style="margin: 1em;
+        display: flex;
+        flex-direction: row;
+        justify-content: start;">
+            <a href="{{context_data.login_href}}"  target="_blank" id="auth" style="border: 1px solid blue;
+            background: aliceblue;
+            padding: 0.3em;
+            cursor: pointer;
+            border-radius: 0.5em;
+            margin: 0.1em;"
+            >
+                Authenticate
+            </a>
+            <b id="userView" rel="noopener noreferrer" style="border: 1px solid blue;
+            background: aliceblue;
+            padding: 0.3em;
+            cursor: pointer;
+            border-radius: 0.5em;
+            margin: 0.1em;">User View</b>
+            <b id="userBio" rel="noopener noreferrer" style="border: 1px solid blue;
+            background: aliceblue;
+            padding: 0.3em;
+            cursor: pointer;
+            border-radius: 0.5em;
+            margin: 0.1em;">User Bio</b>
+        </nav>
+    <main>
+
+    </main>
+    <footer>
+        <p>&copy; 2025 <a href="https://pypi.org/project/django-gauth/" target="_blank" style="color: white;">django-gauth</a> @<a href="https://www.linkedin.com/in/ankit-yadav-b3157b89/" target="_blank" style="color: white;">Ankit Kumar</a> . All Rights Reserved.</p>
+    </footer>
+
+    <!-- page scripts -->
+     <script src="{% static 'js/global.js' %}"></script>
+     <script>
+        // [ Jinja Variables Initialization ]
+        const isGoogleAuthenticated = getConfirmatoryBool("{{context_data.is_google_authenticated}}".toLocaleLowerCase());
+     </script>
+    <script src="{% static 'js/base/popup_handling.js' %}?v=1.0.2">
+        /*
+            Popup Handling
+                * handling userInfo input popup 
+                * handling userBio input popup 
+        */
+    </script>
+    <script> 
+        // [ for checking if page is google authenticated ]
+        if (isGoogleAuthenticated) {
+            displaySuccessMessage("messageBox", "you are Authenticated With Google ( via django-gauth LANDING_PAGE login scheme )")
+        }
+        /** NOTE
+         * This is a "server rendered client" setup, where html pages are served from the
+         *  server itself, hence `isGoogleAuthenticated` is fetched via Jinja2 variable 
+         *  from the server api view itself !
+         * BUT ...
+         * If Your Client side is not server rendered (React/Angular/Vue), you must expose 
+         *  an api from your server for authentication-status , and make a fetch/xhr/axios 
+         *  call here to get the value for `isGoogleAuthenticated` .
+        */
+    </script>
+    <script>
+        // for Real-Time Checking Google Authentication Status
+        /**
+         * As with LANDING_PAGE scheme , the auth success is intimated
+         *  in a seperate langing page Tab , the application page has 
+         *  no means to kno if the auth is sucessfully done , Hence 
+         *  `django-gauth` library sets the localStorage from the server
+         *  end is with an indicator value called :"_ga".
+         * 
+         * Client side , must listen to change events on this value to
+         *  intimate the user about the successful auth .
+        */
+        const value = window.localStorage.getItem("_ga")
+        window.addEventListener('storage', (event) => {
+            // Your code to handle the storage change
+            console.log('localStorage changed!');
+            console.log('Key:', event.key);
+            console.log('Old Value:', event.oldValue);
+            console.log('New Value:', event.newValue);
+            console.log('URL:', event.url);
+            console.log('Storage Area:', event.storageArea);
+
+            if (getConfirmatoryBool(event.newValue)){
+                displaySuccessMessage("messageBox", "you are Authenticated With Google ( via django-gauth LANDING_PAGE login scheme )")
+            }
+        });
+    </script>
+</body>
+</html>
