@@ -26,6 +26,7 @@ quickstarters on django_gauth package
 | demo | description |
 | ---- | ----------- |
 | 1. [my-django-project ↗](./my-django-project/) <br> [more details ...](#my-django-project)| This is demonstrating your own django project |
+| 2. [demo sample 1 ↗](./demo/sample1/) <br> [more details ...](#Sample1)| This is demonstrating a client-server type setup |
 
 ---
 
@@ -50,5 +51,12 @@ As the name suggests , it's your own django project !
         * Same Page Redirection
             * via Query Params
             * via Headers
+
+
+### Sample1
+
+It has a Django server ( for api's ) and a Flask Server ( for UI SSR rendered )
+
+- the Flask Server can be think of as any React/Angular/Vue application .
 
 
