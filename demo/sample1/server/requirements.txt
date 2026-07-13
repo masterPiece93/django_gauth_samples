@@ -1,0 +1,10 @@
+# Python 3.12
+
+# core
+django-environ
+djangorestframework
+django-gauth==0.3.0
+
+# api
+Markdown
+pygments

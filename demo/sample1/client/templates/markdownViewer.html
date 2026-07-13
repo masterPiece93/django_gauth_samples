@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- sindresorhus/github-markdown-css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.9.0/github-markdown.min.css" referrerpolicy="no-referrer" />
+<head>
+    <meta charset="UTF-8">
+    <title>Flask Fetch Integration</title>
+    <style>
+    .tabs-container { max-width: 600px; margin: 2rem auto; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; }
+    .tab-list { display: flex; background: #f5f5f5; border-bottom: 1px solid #ccc; margin: 0; padding: 0; }
+    .tab-button { flex: 1; padding: 1rem; border: none; background: none; cursor: pointer; color: #666; font-weight: 600; }
+    .tab-button.active { background: #fff; color: #0076ff; border-bottom: 2px solid #0076ff; }
+    .tab-panel { display: none; padding: 1.5rem; }
+    .tab-panel.active { display: block; }
+</style>
+</head>
+<body>
+
+    <h1 style="text-align: center;">UI Application <small><sup>( Served by Flask )</sup></small> </h1>
+    <h2 style="text-align: center;">Markdown Viewer</h2>
+
+  <div class="tabs-container">
+    <div class="tab-list" role="tablist">
+      <button id="raw-tab" class="tab-button active" data-target="#p1" role="tab" aria-selected="true">Raw</button>
+      <button id="preview-tab" class="tab-button" data-target="#p2" role="tab" aria-selected="false">Preview</button>
+    </div>
+    <div id="p1" class="tab-panel active" role="tabpanel" contenteditable="plaintext-only">
+# Sample Content
+
+
+A python code snippet
+```python
+import os
+```
+
+---
+
+A table
+
+| name | age | tags | 
+| ------ | ----  | :---: |
+| ankit | 32 | `developer` `python` |
+| kumar | 33 | `developer` `javascript` |
+
+---
+
+A Highlighted Text
+
+> NOTE : This is for demo purpose
+
+
+---
+
+Points 
+
+1. a
+2. b
+3. c
+
+---
+    </div>
+    <div id="p2" class="tab-panel markdown-body" role="tabpanel">Content 2</div>
+  </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script>
+
+    // Get the CSRF token
+    const csrftoken = getCookie('csrftoken');
+
+    // -------------------------------------------------------------------
+    document.querySelector('.tab-list').addEventListener('click', e => {
+      const btn = e.target.closest('.tab-button');
+      if (!btn) return;
+      document.querySelectorAll('.tab-button, .tab-panel').forEach(el => el.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelector(btn.dataset.target).classList.add('active');
+    });
+
+    document.getElementById('preview-tab').addEventListener('click', async () => {
+            const payload = document.getElementById('p1').innerText; // Get the raw markdown content
+
+            try {
+                // Send the asynchronous POST request
+                const response = await fetch('/api/markdown-to-html', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: payload
+                });
+
+                if (!response.ok) throw new Error('Network response failure.');
+
+                const result = await response.text(); // Parse the response JSON
+                console.log('Server response:', result);
+                
+                const cleanHtml = decodeHtmlEntities(result);
+                document.getElementById('p2').innerHTML = cleanHtml;
+            } catch (error) {
+                document.getElementById('p2').innerHTML = '<p>Error loading content.</p>';
+                console.error('Error during fetch:', error);
+            }
+        });
+  </script>
+
+</body>
+</html>

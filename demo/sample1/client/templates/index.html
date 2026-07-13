@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask Fetch Integration</title>
+</head>
+<body>
+
+    <h1 style="text-align: center;">UI Application <small><sup>( Served by Flask )</sup></small> </h1>
+    
+    <div>
+        <button id="send-btn">Logged-In User Info</button>
+        <p id="response-text" style="white-space: pre; font-family: monospace;"></p>
+    </div>
+    <div>
+        <button id="markdown-btn">Markdown</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        // Get the CSRF token
+        const csrftoken = getCookie('csrftoken');
+        
+        document.getElementById('send-btn').addEventListener('click', async () => {
+            const payload = {};
+
+            try {
+                // Send the asynchronous POST request
+                const response = await fetch('/api/me', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: JSON.stringify(payload) // Convert object to JSON string
+                });
+
+                if (!response.ok) throw new Error('Network response failure.');
+
+                const result = await response.json(); // Parse the response JSON
+                console.log('Server response:', result);
+                document.getElementById('response-text').innerText = JSON.stringify(result, null, 2);
+
+            } catch (error) {
+                console.error('Error during fetch:', error);
+            }
+        });
+
+        document.getElementById('markdown-btn').addEventListener('click', async () => {
+            // redirect to markdownView page
+            window.location.href = '/markdownView';
+        });
+    </script>
+</body>
+</html>
+
+</html>

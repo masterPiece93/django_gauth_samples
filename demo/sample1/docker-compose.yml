@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  django_api:
+    build:
+      context: ./server
+      dockerfile: ./docker/Dockerfile
+    restart: always
+    volumes:
+      # Static files collected here are shared read-only with Nginx.
+      - static_volume:/app/staticfiles
+    # We do NOT publish ports to the host here for security. 
+    # Only Nginx can talk to this container.
+
+  flask_web:
+    build: 
+      context: ./client
+      dockerfile: ./docker/Dockerfile
+    restart: always
+    # Again, no ports mapped to the host.
+
+  nginx_proxy:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - "80:80" # Maps host port 80 to Nginx container port 80
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      # Same static files Django collected, served directly by Nginx.
+      - static_volume:/app/staticfiles:ro
+    depends_on:
+      - django_api
+      - flask_web
+
+volumes:
+  static_volume:
