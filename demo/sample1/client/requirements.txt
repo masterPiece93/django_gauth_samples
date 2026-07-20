@@ -1,6 +1,6 @@
 # Python 3.12
 
 # core
-Flask
-gunicorn
-environs
+Flask       # Flask web framework
+gunicorn    # WSGI HTTP server for UNIX
+environs    # Environment variable management
