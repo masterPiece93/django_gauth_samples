@@ -6,6 +6,9 @@ RUN pip install --no-cache-dir -r requirements.txt gunicorn
 
 COPY . .
 
+# Not to be done in production, but for demo purposes we can run migrations at container startup
+RUN python3 manage.py migrate
+
 # Expose the port Django will run on internally
 EXPOSE 8000
 
