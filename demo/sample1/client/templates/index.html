@@ -8,13 +8,25 @@
 
     <h1 style="text-align: center;">UI Application <small><sup>( Served by Flask )</sup></small> </h1>
     
-    <div>
-        <button id="send-btn">Logged-In User Info</button>
-        <p id="response-text" style="white-space: pre; font-family: monospace;"></p>
-    </div>
-    <div>
-        <button id="markdown-btn">Markdown</button>
-    </div>
+    <section style="display: flex;
+                    width: 100%;
+                    flex-direction: row;"
+    >
+        <div style="display: flex;
+                    flex: 1;"
+        >
+            <div>
+                <button id="send-btn">Logged-In User Info</button>
+                <p id="response-text" style="white-space: pre; font-family: monospace;"></p>
+            </div>
+            <div>
+                <button id="markdown-btn" title="Go to Markdown Page">Markdown</button>
+            </div>
+        </div>
+        <div style="display: flex;">
+            <button id="landing-page-btn" title="Go to Landing Page ( /gauth )">Landing Page</button>
+        </div>
+    </section>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script>
@@ -50,6 +62,11 @@
         document.getElementById('markdown-btn').addEventListener('click', async () => {
             // redirect to markdownView page
             window.location.href = '/markdownView';
+        });
+
+        document.getElementById('landing-page-btn').addEventListener('click', async () => {
+            // redirect to markdownView page
+            window.location.href = '/gauth';    // redirect to gauth page ( server by django server)
         });
     </script>
 </body>
