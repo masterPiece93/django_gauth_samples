@@ -1,10 +1,10 @@
 # Python 3.12
 
 # core
-django-environ
-djangorestframework
-django-gauth==0.3.1
+django-environ          # Environment variable management
+djangorestframework     # Django REST framework
+django-gauth==0.3.1     # Google OAuth2 authentication for Django
 
 # api
-Markdown
-pygments
+Markdown                # Markdown processing
+pygments                # Syntax highlighting
