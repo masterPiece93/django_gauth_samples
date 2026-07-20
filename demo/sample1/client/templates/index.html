@@ -19,11 +19,12 @@
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script>
         // Get the CSRF token
-        const csrftoken = getCookie('csrftoken');
+        const csrftoken = getCookie('csrftoken');   // used by the fetch API Call to include CSRF token in the request headers
         
+        // API Call
         document.getElementById('send-btn').addEventListener('click', async () => {
             const payload = {};
-
+            
             try {
                 // Send the asynchronous POST request
                 const response = await fetch('/api/me', {

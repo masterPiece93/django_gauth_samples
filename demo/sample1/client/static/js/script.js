@@ -1,5 +1,11 @@
-console.log('utilities loaded')
+/*
+ Utility functions for the application
+ =====================================
+*/
+console.log('utilities loaded');
+
 function getCookie(name) {
+    // Get the value of a cookie by name
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');
@@ -15,6 +21,7 @@ function getCookie(name) {
 }
 
 function decodeHtmlEntities(text) {
+    // Decode HTML entities in a string
         const textArea = document.createElement("textarea");
         textArea.innerHTML = text;
         return textArea.value;

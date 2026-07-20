@@ -24,6 +24,9 @@ class PingViewSet(viewsets.ViewSet):
         return Response({"message": "pong"})
 
 def ping(request):
+    """
+    A simple view that responds with a ping message.
+    """
     return JsonResponse({"message": "pong"})
 
 @gauth_required(response="redirect")
@@ -34,19 +37,22 @@ def docs(request):
 
 @gauth_required(response="json")   # 401 JSON instead of a redirect
 def me(request):
-    print(request.user)  # This will print the authenticated user to the console
-    print(request.user.is_authenticated)  # This will print True if the user is authenticated
-    print(request.user.email)  # This will print the email of the authenticated user
-    print(request.user.first_name)  # This will print the first name of the authenticated user
-    print(request.user.last_name)  # This will print the last name of the authenticated user
-    print(request.user.get_full_name())  # This will print the full name of the authenticated user
-    print(request.user.get_username())  # This will print the username of the authenticated user
-    print(request.user.is_staff)  # This will print True if the user is a staff member
-    print(request.user.is_superuser)  # This will print True if the user is a superuser
-    print(request.user.is_active)  # This will print True if the user is active
-    print(request.user.date_joined)  # This will print the date the user joined
-    print(request.user.last_login)  # This will print the last login date of the user
-    print(request.user.groups.all())  # This will print the groups the user belongs to
+    """
+    Return information about the authenticated user.
+    """
+    print(request.user)                     # This will print the authenticated user to the console
+    print(request.user.is_authenticated)    # This will print True if the user is authenticated
+    print(request.user.email)               # This will print the email of the authenticated user
+    print(request.user.first_name)          # This will print the first name of the authenticated user
+    print(request.user.last_name)           # This will print the last name of the authenticated user
+    print(request.user.get_full_name())     # This will print the full name of the authenticated user
+    print(request.user.get_username())      # This will print the username of the authenticated user
+    print(request.user.is_staff)            # This will print True if the user is a staff member
+    print(request.user.is_superuser)        # This will print True if the user is a superuser
+    print(request.user.is_active)           # This will print True if the user is active
+    print(request.user.date_joined)         # This will print the date the user joined
+    print(request.user.last_login)          # This will print the last login date of the user
+    print(request.user.groups.all())        # This will print the groups the user belongs to
     print(request.user.user_permissions.all())  # This will print the permissions the user has
     return JsonResponse({
         "email": request.user.email,
@@ -68,7 +74,11 @@ def markdown_to_html(request: HttpRequest):
     """
     Convert Markdown text to HTML.
     """
-    import markdown
-    markdown_text = request.body.decode("utf-8")
+    import markdown # standard library for Markdown conversion
+    markdown_text = request.body.decode("utf-8") # Get the Markdown text from the request body
+
+    # Convert Markdown to HTML using the markdown library with some extensions
     html_content = markdown.markdown(markdown_text, extensions=['extra', 'toc', 'codehilite', 'tables', 'fenced_code'], extension_configs={'codehilite': {'css_class': 'highlight'}})
+    
+    # Return the HTML content as an HttpResponse
     return HttpResponse(html_content)
