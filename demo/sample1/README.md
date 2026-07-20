@@ -44,14 +44,21 @@ demo/sample1/
 ## Pre-requisite
 
 - Docker
+- Google Oauth2 Credentials
+  - client id
+  - client secret
 
 ## Running the demo
 
-First time Run
-```shell
-python3 manage.py migrate
+Go to Sample 1
+```sh
+cd demo/sample1
 ```
-- it will generate `db.sqlite3` file, which will be included in docker container in consequent runs
+
+Set Env
+- create a `.env` file at location : `server/.env`
+- copy the contents of `server/.env.template` in your newly created `server/.env` file
+- set the values accordingly
 
 Run
 ```shell
